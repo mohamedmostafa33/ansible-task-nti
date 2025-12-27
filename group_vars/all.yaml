@@ -1,0 +1,16 @@
+users_group: 
+  - user1
+  - user2
+  - user3
+  - user4
+  - user5
+
+task1: "Update Cache"
+task2: "Install Apache"
+task3: "Start & enable apache"
+task4: "Creating 5 users"
+task5: "Update resolve.config"
+task6: "List all users"
+task7: "Show Users"
+
+handler_name: "Restart web service"

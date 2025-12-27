@@ -1,0 +1,42 @@
+- name: NTI playbook task
+  hosts: ec2-server
+  become: yes
+  vars_files:
+    - ../defaults/main.yaml
+    - ../group_vars/all.yaml
+  handlers:
+    - name: "{{ handler_name }}"
+      service: 
+        name: "{{ web_service }}"
+        state: restarted
+  tasks:
+    - name: "{{ task1 }}"
+      dnf:
+        update_cache: yes
+    - name: "{{ task2 }}"
+      dnf: 
+        name: httpd
+        state: present
+      notify: "{{ handler_name }}"
+    - name: "{{ task3 }}"
+      service:
+        name: "{{ web_service }}"
+        state: started
+        enabled: yes
+    - name: "{{ task4 }}"
+      user:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ users_group }}"
+    - name: "{{ task5 }}"
+      lineinfile:
+        path: /etc/resolv.conf
+        line: "nameserver {{ name_server }}"
+        state: present
+    - name: "{{ task6 }}"
+      script: "{{ script_path }}"
+      register: users_list_output
+    - name: "{{ task7 }}"
+      debug:
+        var: users_list_output.stdout_lines
+
